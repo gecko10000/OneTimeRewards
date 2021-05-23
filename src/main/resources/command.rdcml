@@ -1,0 +1,17 @@
+onetimerewards,otr {
+	grant string:reward player:target?(context self) {
+		permission otr.grant
+		help Grant a reward to a player (or don't if they already got it)
+		hook grant
+	}
+	add string:reward string[]:command? {
+		permission otr.add
+		help Set/add a command to a reward
+		hook add
+	}
+	reload {
+		permission otr.reload
+		help Reload the config
+		hook reload
+	}
+}

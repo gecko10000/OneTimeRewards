@@ -1,0 +1,4 @@
+name: OneTimeRewards
+main: io.github.levtey.OneTimeRewards.OneTimeRewards
+version: 0.1
+api-version: 1.16
