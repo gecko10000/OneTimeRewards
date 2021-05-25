@@ -1,13 +1,23 @@
 onetimerewards,otr {
-	grant string:reward player:target?(context self) {
+	grant reward:reward player:target?(context self) {
 		permission otr.grant
 		help Grant a reward to a player (or don't if they already got it)
 		hook grant
 	}
-	add string:reward string[]:command? {
-		permission otr.add
+	add reward:reward string...:command? {
+		permission otr.configure
 		help Set/add a command to a reward
 		hook add
+	}
+	setmax reward:reward int:amount {
+		permission otr.configure
+		help Set the max amount of times a reward can be claimed
+		hook setmax
+	}
+	reset reward:reward player:target?(context self) {
+		permission otr.reset
+		help Reset count for a player
+		hook reset
 	}
 	reload {
 		permission otr.reload

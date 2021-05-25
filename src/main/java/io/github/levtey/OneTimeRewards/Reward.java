@@ -20,6 +20,9 @@ public class Reward {
 	@ConfigPath
 	private String name;
 	
+	@ConfigValue("max-claims")
+	private int max = 1;
+	
 	@ConfigValue("commands")
 	private List<String> commands = ConfigManager.list(String.class);
 	
@@ -42,6 +45,15 @@ public class Reward {
 		return this;
 	}
 	
+	public Reward setMax(int max) {
+		this.max = max;
+		return this;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
 	public boolean execute(Player player) {
 		PersistentDataContainer pdc = player.getPersistentDataContainer();
 		if (alreadyExecuted(pdc)) return false;
@@ -49,12 +61,16 @@ public class Reward {
 		.map(str -> str.replace("%player%", player.getName()))
 		.forEach(str -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), str));
 		player.getInventory().addItem(items.toArray(new ItemStack[0])).forEach((index, extra) -> player.getWorld().dropItem(player.getLocation(), extra));
-		pdc.set(rewardKey(), PersistentDataType.BYTE, (byte) 0);
+		pdc.set(rewardKey(), PersistentDataType.INTEGER, pdc.getOrDefault(rewardKey(), PersistentDataType.INTEGER, 0) + 1);
 		return true;
 	}
 	
+	public void reset(Player player) {
+		player.getPersistentDataContainer().set(rewardKey(), PersistentDataType.INTEGER, 0);
+	}
+	
 	private boolean alreadyExecuted(PersistentDataContainer pdc) {
-		return pdc.has(rewardKey(), PersistentDataType.BYTE);
+		return pdc.getOrDefault(rewardKey(), PersistentDataType.INTEGER, 0) >= max;
 	}
 	
 	private NamespacedKey rewardKey() {
