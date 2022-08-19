@@ -1,5 +1,6 @@
 package io.github.levtey.OneTimeRewards;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -8,11 +9,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-
-import redempt.redlib.configmanager.ConfigManager;
-import redempt.redlib.configmanager.annotations.ConfigMappable;
-import redempt.redlib.configmanager.annotations.ConfigPath;
-import redempt.redlib.configmanager.annotations.ConfigValue;
+import redempt.redlib.config.annotations.ConfigMappable;
+import redempt.redlib.config.annotations.ConfigName;
+import redempt.redlib.config.annotations.ConfigPath;
 
 @ConfigMappable
 public class Reward {
@@ -20,14 +19,14 @@ public class Reward {
 	@ConfigPath
 	private String name;
 	
-	@ConfigValue("max-claims")
+	@ConfigName("max-claims")
 	private int max = 1;
 	
-	@ConfigValue("commands")
-	private List<String> commands = ConfigManager.list(String.class);
+	@ConfigName("commands")
+	private List<String> commands = new ArrayList<>();
 	
-	@ConfigValue("items")
-	private List<ItemStack> items = ConfigManager.list(ItemStack.class);
+	@ConfigName("items")
+	private List<ItemStack> items = new ArrayList<>();
 	
 	protected Reward() {}
 	

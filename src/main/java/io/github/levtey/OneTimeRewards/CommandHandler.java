@@ -16,8 +16,8 @@ public class CommandHandler {
 	
 	public CommandHandler(OneTimeRewards plugin) {
 		this.plugin = plugin;
-		ArgType<Reward> rewardType = new ArgType<Reward>("reward", name -> plugin.rewards.computeIfAbsent(name, k -> new Reward(name)))
-				.tabStream(sender -> plugin.rewards.keySet().stream());
+		ArgType<Reward> rewardType = new ArgType<>("reward", name -> OneTimeRewards.rewards.computeIfAbsent(name, k -> new Reward(name)))
+				.tabStream(sender -> OneTimeRewards.rewards.keySet().stream());
 		new CommandParser(plugin.getResource("command.rdcml"))
 		.setArgTypes(rewardType)
 		.parse().register("", this);

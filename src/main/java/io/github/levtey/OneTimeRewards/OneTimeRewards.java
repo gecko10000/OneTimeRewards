@@ -1,16 +1,15 @@
 package io.github.levtey.OneTimeRewards;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import redempt.redlib.configmanager.ConfigManager;
-import redempt.redlib.configmanager.annotations.ConfigValue;
+import redempt.redlib.config.ConfigManager;
 
 public class OneTimeRewards extends JavaPlugin {
-	
-	@ConfigValue("rewards")
-	public Map<String, Reward> rewards = ConfigManager.map(Reward.class);
+
+	public static Map<String, Reward> rewards = new HashMap<>();
 	private ConfigManager manager;
 	
 	public void onEnable() {
@@ -19,7 +18,7 @@ public class OneTimeRewards extends JavaPlugin {
 	}
 	
 	public void reload() {
-		manager = new ConfigManager(this).register(this).saveDefaults().load();
+		manager = ConfigManager.create(this).target(OneTimeRewards.class).saveDefaults().load();
 	}
 	
 	public ConfigManager getManager() {
